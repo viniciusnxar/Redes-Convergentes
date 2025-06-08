@@ -1,0 +1,92 @@
+show ip bgp summary
+show ip route
+show ip ospf neighbor
+
+ROUTER_CPS_1
+GE0/0 = 192.168.4.2
+GE0/1 = 10.1.0.1
+
+----COMANDOS----
+router bgp 65000
+neighbor 192.168.4.1 remote-as 65001
+redistribute connected
+end
+
+
+ROUTER_ISP_1
+GE0/0 = 192.168.0.1
+GE0/1 = 192.168.2.1
+GE0/2 = 192.168.4.1
+
+--COMANDOS-- 
+router bgp 65001
+neighbor 192.168.4.2 remote-as 65000
+redistribute connected
+redistribute ospf 10 match external
+
+end
+
+ROUTER_SP_1
+GE0/0 = 192.168.5.2
+GE0/1 = 172.16.0.1
+
+--COMANDOS--
+router bgp 65000
+neighbor 192.168.5.1 remote-as 65001
+redistribute connected
+end
+
+
+ROUTER_ISP_3
+GE0/0 = 192.168.3.1
+GE0/1 = 192.168.1.2
+GE0/2 = 192.168.5.1
+
+--COMANDOS-- 
+router bgp 65001
+neighbor 192.168.5.2 remote-as 65000
+redistribute connected
+redistribute ospf 10 match external
+end
+
+
+ROUTER_ISP_1
+--COMANDOS--
+router ospf 10
+network 192.168.0.0 0.0.0.3 area 0
+network 192.168.2.0 0.0.0.3 area 0
+network 192.168.4.0 0.0.0.3 area 0
+redistribute bgp 65001 subnets
+end
+
+ROUTER_ISP_2
+GE0/0 = 
+GE0/1 = 192.168.1.1
+GE0/2 = 192.168.0.2
+
+
+--COMANDOS--
+router ospf 10
+network 192.168.1.0 0.0.0.3 area 0 
+network 192.168.0.0 0.0.0.3 area 0 
+end
+
+ROUTER_ISP_3
+--COMANDOS---
+router ospf 10
+network 192.168.3.0 0.0.0.3 area 0
+network 192.168.1.0 0.0.0.3 area 0
+network 192.168.5.0 0.0.0.3 area 0
+redistribute bgp 65001 subnets
+end
+
+ROUTER_ISP_4
+GE0/0 = 
+GE0/1 = 192.168.3.2
+GE0/2 = 192.168.2.2
+
+--COMANDOS--
+router ospf 10
+network 192.168.3.0 0.0.0.3 area 0
+network 192.168.2.0 0.0.0.3 area 0
+
