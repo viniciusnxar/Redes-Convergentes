@@ -1,0 +1,28 @@
+show ip route
+show ip route rip
+show ip interface brief 
+show ip bgp summary
+Show ip protocols
+show ip bgp
+
+Switch:
+show interface trunk
+show vlan brief
+ta2uYHV^eABwSdO
+
+RIP
+A - B
+
+RIP BGP
+B - C
+
+OSPF
+C - D
+OSPF
+E
+
+avtr_b2f5a0bb-9d67-4147-8775-e55818fa21d1
+
+
+avtr_b85eccf3-deef-4da4-9c0d-68a8783ea4f8
+
